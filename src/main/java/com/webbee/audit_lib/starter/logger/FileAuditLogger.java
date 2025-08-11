@@ -18,30 +18,28 @@ import java.time.format.DateTimeFormatter;
 @Component
 @ConditionalOnProperty(prefix = "audit.file", name = "enabled", havingValue = "true", matchIfMissing = false)
 public class FileAuditLogger implements AuditLogger {
-    
-    private static final Logger logger = LoggerFactory.getLogger(FileAuditLogger.class);
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-    
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileAuditLogger.class);
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
     private final AuditProperties auditProperties;
-    
+
     public FileAuditLogger(AuditProperties auditProperties) {
         this.auditProperties = auditProperties;
         ensureDirectoryExists();
     }
-    
+
     @Override
     public void log(AuditEvent event) {
         try {
-            String logEntry = String.format("%s AUDIT_FILE - %s%n", 
-                LocalDateTime.now().format(formatter), 
+            String logEntry = String.format("%s AUDIT_FILE - %s%n",
+                LocalDateTime.now().format(FORMATTER),
                 event.toString());
-            
             writeToFile(logEntry);
         } catch (Exception e) {
-            logger.error("Failed to write audit event to file: {}", auditProperties.getFile().getPath(), e);
+            LOGGER.error("Failed to write audit event to file: {}", auditProperties.getFile().getPath(), e);
         }
     }
-    
+
     private void writeToFile(String logEntry) throws IOException {
         String filePath = auditProperties.getFile().getPath();
         try (FileWriter writer = new FileWriter(filePath, true)) {
@@ -49,7 +47,7 @@ public class FileAuditLogger implements AuditLogger {
             writer.flush();
         }
     }
-    
+
     private void ensureDirectoryExists() {
         try {
             Path filePath = Paths.get(auditProperties.getFile().getPath());
@@ -58,12 +56,13 @@ public class FileAuditLogger implements AuditLogger {
                 Files.createDirectories(directory);
             }
         } catch (IOException e) {
-            logger.error("Failed to create audit log directory", e);
+            LOGGER.error("Failed to create audit log directory", e);
         }
     }
-    
+
     @Override
     public boolean supports(AuditProperties.LoggingMode mode) {
         return mode == AuditProperties.LoggingMode.FILE;
     }
+
 }

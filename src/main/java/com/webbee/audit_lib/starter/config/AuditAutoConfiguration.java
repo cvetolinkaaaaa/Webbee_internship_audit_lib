@@ -6,8 +6,6 @@ import com.webbee.audit_lib.starter.http.filter.ContentCachingFilter;
 import com.webbee.audit_lib.starter.http.interceptor.HttpRequestInterceptor;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -128,4 +126,5 @@ public class AuditAutoConfiguration implements WebMvcConfigurer {
         mapper.findAndRegisterModules();
         return mapper;
     }
+
 }

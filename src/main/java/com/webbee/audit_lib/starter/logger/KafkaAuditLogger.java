@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @ConditionalOnProperty(prefix = "audit.kafka", name = "enabled", havingValue = "true", matchIfMissing = false)
 public class KafkaAuditLogger implements AuditLogger {
 
-    private static final Logger logger = LoggerFactory.getLogger(KafkaAuditLogger.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaAuditLogger.class);
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final AuditProperties auditProperties;
@@ -45,7 +45,7 @@ public class KafkaAuditLogger implements AuditLogger {
             });
 
         } catch (Exception e) {
-            logger.error("Failed to send message to Kafka", e);
+            LOGGER.error("Failed to send message to Kafka", e);
         }
 
     }
@@ -54,4 +54,5 @@ public class KafkaAuditLogger implements AuditLogger {
     public boolean supports(AuditProperties.LoggingMode mode) {
         return mode == AuditProperties.LoggingMode.KAFKA;
     }
+
 }

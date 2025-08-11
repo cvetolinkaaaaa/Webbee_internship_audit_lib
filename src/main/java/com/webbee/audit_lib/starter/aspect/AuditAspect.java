@@ -29,19 +29,15 @@ public class AuditAspect {
 
         String methodName = signature.getDeclaringType().getSimpleName() + "." + method.getName();
         Object[] args = joinPoint.getArgs();
-        
         auditService.logStart(methodName, args, auditLog.logLevel());
-        
         try {
             Object result = joinPoint.proceed();
-            
             auditService.logEnd(methodName, result, auditLog.logLevel());
-            
             return result;
         } catch (Throwable throwable) {
             auditService.logError(methodName, throwable, auditLog.logLevel());
-            
             throw throwable;
         }
     }
+
 }

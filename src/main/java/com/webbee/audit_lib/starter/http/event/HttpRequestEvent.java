@@ -1,4 +1,3 @@
-
 package com.webbee.audit_lib.starter.http.event;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,10 +12,9 @@ import java.util.Objects;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class HttpRequestEvent {
-    
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     private LocalDateTime timestamp;
-    
     private String requestType;
     private String method;
     private int statusCode;
@@ -27,7 +25,7 @@ public class HttpRequestEvent {
     private Long executionTime;
     private String userAgent;
     private String remoteAddress;
-    
+
     public HttpRequestEvent() {
         this.timestamp = LocalDateTime.now();
     }
@@ -44,11 +42,15 @@ public class HttpRequestEvent {
             Objects.toString(responseBody, "{}")
         );
     }
-    
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         HttpRequestEvent that = (HttpRequestEvent) o;
         return statusCode == that.statusCode &&
                 Objects.equals(correlationId, that.correlationId) &&
@@ -56,9 +58,10 @@ public class HttpRequestEvent {
                 Objects.equals(method, that.method) &&
                 Objects.equals(url, that.url);
     }
-    
+
     @Override
     public int hashCode() {
         return Objects.hash(requestType, method, statusCode, url, correlationId);
     }
+
 }

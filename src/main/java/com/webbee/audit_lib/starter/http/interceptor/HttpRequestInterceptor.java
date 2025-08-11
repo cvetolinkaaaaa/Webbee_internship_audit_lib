@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webbee.audit_lib.starter.http.service.HttpRequestService;
 import com.webbee.audit_lib.starter.http.event.HttpRequestEvent;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletRequestWrapper;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpServletResponseWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -22,7 +20,7 @@ import java.util.UUID;
 @Component
 public class HttpRequestInterceptor implements HandlerInterceptor {
 
-    private static final Logger logger = LoggerFactory.getLogger(HttpRequestInterceptor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HttpRequestInterceptor.class);
 
     private static final String START_TIME_ATTRIBUTE = "startTime";
     private static final String CORRELATION_ID_ATTRIBUTE = "correlationId";
@@ -49,7 +47,6 @@ public class HttpRequestInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            org.springframework.web.servlet.ModelAndView modelAndView) {
-        // Можем добавить дополнительную логику здесь, если нужно
     }
 
     @Override
@@ -65,7 +62,7 @@ public class HttpRequestInterceptor implements HandlerInterceptor {
                 httpRequestService.log(event);
             }
         } catch (Exception e) {
-            logger.error("Ошибка при логировании HTTP-запроса", e);
+            LOGGER.error("Ошибка при логировании HTTP-запроса", e);
         }
     }
 
@@ -82,7 +79,6 @@ public class HttpRequestInterceptor implements HandlerInterceptor {
         event.setUserAgent(request.getHeader("User-Agent"));
         event.setRemoteAddress(getClientIpAddress(request));
 
-        // Получение тела запроса
         if (request instanceof ContentCachingRequestWrapper) {
             ContentCachingRequestWrapper wrapper = (ContentCachingRequestWrapper) request;
             byte[] content = wrapper.getContentAsByteArray();
@@ -94,7 +90,6 @@ public class HttpRequestInterceptor implements HandlerInterceptor {
             }
         }
 
-        // Получение тела ответа
         if (response instanceof ContentCachingResponseWrapper) {
             ContentCachingResponseWrapper wrapper = (ContentCachingResponseWrapper) response;
             byte[] content = wrapper.getContentAsByteArray();
@@ -103,11 +98,10 @@ public class HttpRequestInterceptor implements HandlerInterceptor {
                 if (StringUtils.hasText(responseBody)) {
                     event.setResponseBody(responseBody);
                 }
-                // Важно: копируем содержимое обратно в response
                 try {
                     wrapper.copyBodyToResponse();
                 } catch (Exception e) {
-                    logger.warn("Не удалось скопировать тело ответа", e);
+                    LOGGER.warn("Не удалось скопировать тело ответа", e);
                 }
             }
         }
@@ -128,4 +122,5 @@ public class HttpRequestInterceptor implements HandlerInterceptor {
 
         return request.getRemoteAddr();
     }
+
 }

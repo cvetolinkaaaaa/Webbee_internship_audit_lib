@@ -11,12 +11,12 @@ import java.util.List;
 
 @Service
 public class HttpRequestService {
-    
-    private static final Logger logger = LoggerFactory.getLogger(HttpRequestService.class);
-    
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(HttpRequestService.class);
+
     private final List<HttpRequestLogger> httpRequestLoggers;
     private final AuditProperties auditProperties;
-    
+
     public HttpRequestService(List<HttpRequestLogger> httpRequestLoggers, AuditProperties auditProperties) {
         this.httpRequestLoggers = httpRequestLoggers;
         this.auditProperties = auditProperties;
@@ -42,10 +42,11 @@ public class HttpRequestService {
                         try {
                             httpLogger.log(event);
                         } catch (Exception e) {
-                            logger.error("Failed to log HTTP request event with mode: {} using logger: {}",
+                            LOGGER.error("Failed to log HTTP request event with mode: {} using logger: {}",
                                     mode, httpLogger.getClass().getSimpleName(), e);
                         }
                     });
         }
     }
+
 }

@@ -84,4 +84,5 @@ public class AuditService {
                 .forEach(logger -> logger.log(event))
         );
     }
+
 }

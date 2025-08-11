@@ -1,6 +1,5 @@
 package com.webbee.audit_lib.starter.http.logger;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webbee.audit_lib.starter.config.AuditProperties;
 import com.webbee.audit_lib.starter.http.event.HttpRequestEvent;
@@ -17,8 +16,7 @@ import org.springframework.stereotype.Component;
 @ConditionalOnProperty(prefix = "audit.http.kafka", name = "enabled", havingValue = "true", matchIfMissing = false)
 public class KafkaHttpRequestLogger implements HttpRequestLogger {
 
-    private static final Logger logger = LoggerFactory.getLogger(KafkaHttpRequestLogger.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaHttpRequestLogger.class);
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final AuditProperties auditProperties;
     private final ObjectMapper objectMapper;
@@ -45,7 +43,7 @@ public class KafkaHttpRequestLogger implements HttpRequestLogger {
             });
 
         } catch (Exception e) {
-            logger.error("Failed to send message to Kafka", e);
+            LOGGER.error("Failed to send message to Kafka", e);
         }
 
     }
@@ -55,4 +53,5 @@ public class KafkaHttpRequestLogger implements HttpRequestLogger {
 
         return mode == AuditProperties.LoggingMode.KAFKA;
     }
+
 }

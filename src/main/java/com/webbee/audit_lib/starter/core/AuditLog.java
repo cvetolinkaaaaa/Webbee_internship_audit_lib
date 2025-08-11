@@ -8,16 +8,17 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AuditLog {
-    
+
     /**
      * Уровень логирования
      */
     LogLevel logLevel() default LogLevel.DEBUG;
-    
+
     /**
      * Перечисление уровней логирования
      */
     enum LogLevel {
         TRACE, DEBUG, INFO, WARN, ERROR
     }
+
 }

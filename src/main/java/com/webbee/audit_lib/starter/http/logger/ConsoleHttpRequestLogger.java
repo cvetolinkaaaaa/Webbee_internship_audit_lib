@@ -10,16 +10,17 @@ import org.springframework.stereotype.Component;
 @Component
 @ConditionalOnProperty(prefix = "audit.http.console", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class ConsoleHttpRequestLogger implements HttpRequestLogger {
-    
-    private static final Logger logger = LoggerFactory.getLogger("HTTP_REQUEST_CONSOLE");
-    
+
+    private static final Logger LOGGER = LoggerFactory.getLogger("HTTP_REQUEST_CONSOLE");
+
     @Override
     public void log(HttpRequestEvent event) {
-        logger.info(event.toString());
+        LOGGER.info(event.toString());
     }
-    
+
     @Override
     public boolean supports(AuditProperties.LoggingMode mode) {
         return mode == AuditProperties.LoggingMode.CONSOLE;
     }
+
 }

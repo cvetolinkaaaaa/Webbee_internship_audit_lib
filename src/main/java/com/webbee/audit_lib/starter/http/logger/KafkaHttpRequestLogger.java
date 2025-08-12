@@ -11,6 +11,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
+/**
+ * Kafka логгер для HTTP запросов.
+ */
 @Component
 @ConditionalOnClass(KafkaTemplate.class)
 @ConditionalOnProperty(prefix = "audit.http.kafka", name = "enabled", havingValue = "true", matchIfMissing = false)
@@ -29,6 +32,9 @@ public class KafkaHttpRequestLogger implements HttpRequestLogger {
         this.objectMapper = objectMapper;
     }
 
+    /**
+     * Отправляет HTTP событие в Kafka.
+     */
     @Override
     public void log(HttpRequestEvent event) {
         try {

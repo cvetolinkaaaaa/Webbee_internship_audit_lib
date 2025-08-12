@@ -1,6 +1,6 @@
 package com.webbee.audit_lib.starter.logger;
 
-import com.webbee.audit_lib.starter.core.AuditEvent;
+import com.webbee.audit_lib.starter.model.AuditEvent;
 import com.webbee.audit_lib.starter.config.AuditProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +15,9 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Реализация логгера для записи событий аудита в файл.
+ */
 @Component
 @ConditionalOnProperty(prefix = "audit.file", name = "enabled", havingValue = "true", matchIfMissing = false)
 public class FileAuditLogger implements AuditLogger {
@@ -28,6 +31,9 @@ public class FileAuditLogger implements AuditLogger {
         ensureDirectoryExists();
     }
 
+    /**
+     * Записывает событие аудита в файл.
+     */
     @Override
     public void log(AuditEvent event) {
         try {

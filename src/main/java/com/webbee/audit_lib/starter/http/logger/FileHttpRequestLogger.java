@@ -14,6 +14,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
+/**
+ * Файловый логгер для HTTP запросов.
+ */
 @Component
 @ConditionalOnProperty(prefix = "audit.http.file", name = "enabled", havingValue = "true", matchIfMissing = false)
 public class FileHttpRequestLogger implements HttpRequestLogger {
@@ -27,6 +30,9 @@ public class FileHttpRequestLogger implements HttpRequestLogger {
         ensureDirectoryExists();
     }
 
+    /**
+     * Записывает HTTP событие в файл.
+     */
     @Override
     public void log(HttpRequestEvent event) {
         try {

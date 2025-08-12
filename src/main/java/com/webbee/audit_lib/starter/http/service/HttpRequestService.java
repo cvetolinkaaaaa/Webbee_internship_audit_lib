@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Сервис для логирования HTTP запросов.
+ */
 @Service
 public class HttpRequestService {
 
@@ -22,6 +25,9 @@ public class HttpRequestService {
         this.auditProperties = auditProperties;
     }
 
+    /**
+     * Логирует HTTP событие через все подходящие логгеры.
+     */
     public void log(HttpRequestEvent event) {
 
         if (!auditProperties.getHttp().isEnabled()) {

@@ -7,12 +7,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
+/**
+ * Консольный логгер для HTTP запросов.
+ */
 @Component
 @ConditionalOnProperty(prefix = "audit.http.console", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class ConsoleHttpRequestLogger implements HttpRequestLogger {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("HTTP_REQUEST_CONSOLE");
 
+    /**
+     * Выводит HTTP событие в консоль.
+     */
     @Override
     public void log(HttpRequestEvent event) {
         LOGGER.info(event.toString());

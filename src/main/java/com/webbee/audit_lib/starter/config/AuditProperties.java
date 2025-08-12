@@ -6,6 +6,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Конфигурационные свойства для системы аудита.
+ */
 @Data
 @ConfigurationProperties(prefix = "audit")
 public class AuditProperties {

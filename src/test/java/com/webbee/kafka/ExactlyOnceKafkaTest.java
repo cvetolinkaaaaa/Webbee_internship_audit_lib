@@ -2,12 +2,9 @@ package com.webbee.kafka;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webbee.TestKafkaApplication;
-import com.webbee.audit_lib.starter.core.AuditEvent;
-import com.webbee.audit_lib.starter.core.AuditLog;
-import com.webbee.audit_lib.starter.core.AuditService;
+import com.webbee.audit_lib.starter.service.AuditService;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -34,7 +31,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.StreamSupport;
 

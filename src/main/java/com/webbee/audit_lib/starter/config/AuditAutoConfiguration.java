@@ -23,6 +23,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Автоконфигурация Spring Boot для библиотеки аудита.
+ */
 @Configuration
 @EnableConfigurationProperties(AuditProperties.class)
 @ComponentScan(basePackages = "com.webbee.audit_lib.starter")
@@ -38,6 +41,9 @@ public class AuditAutoConfiguration implements WebMvcConfigurer {
         this.auditProperties = auditProperties;
     }
 
+    /**
+     * Регистрирует HTTP перехватчик для аудита входящих запросов.
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         if (auditProperties.getHttp().isEnabled()) {
@@ -45,6 +51,9 @@ public class AuditAutoConfiguration implements WebMvcConfigurer {
         }
     }
 
+    /**
+     * Создает фильтр для кэширования содержимого HTTP запросов и ответов.
+     */
     @Bean
     @ConditionalOnProperty(prefix = "audit.http", name = "enabled", havingValue = "true", matchIfMissing = false)
     public FilterRegistrationBean<ContentCachingFilter> httpRequestCachingFilter() {
@@ -57,6 +66,9 @@ public class AuditAutoConfiguration implements WebMvcConfigurer {
         return registration;
     }
 
+    /**
+     * Создает Kafka producer factory для HTTP аудита с exactly-once семантикой.
+     */
     @Bean
     @ConditionalOnProperty(prefix = "audit.http.kafka", name = "enabled", havingValue = "true")
     public ProducerFactory<String, String> httpAuditKafkaProducerFactory(AuditProperties auditProperties) {
@@ -79,6 +91,9 @@ public class AuditAutoConfiguration implements WebMvcConfigurer {
 
     }
 
+    /**
+     * Создает Kafka template для HTTP аудита.
+     */
     @Bean
     @ConditionalOnProperty(prefix = "audit.http.kafka", name = "enabled", havingValue = "true")
     public KafkaTemplate<String, String> httpAuditKafkaTemplate(
@@ -88,6 +103,9 @@ public class AuditAutoConfiguration implements WebMvcConfigurer {
         return template;
     }
 
+    /**
+     * Создает Kafka producer factory для общего аудита с exactly-once семантикой.
+     */
     @Bean
     @ConditionalOnProperty(prefix = "audit.kafka", name = "enabled", havingValue = "true")
     public ProducerFactory<String, String> generalAuditKafkaProducerFactory(AuditProperties auditProperties) {
@@ -110,6 +128,9 @@ public class AuditAutoConfiguration implements WebMvcConfigurer {
 
     }
 
+    /**
+     * Создает Kafka template для общего аудита.
+     */
     @Bean
     @ConditionalOnProperty(prefix = "audit.kafka", name = "enabled", havingValue = "true")
     public KafkaTemplate<String, String> generalAuditKafkaTemplate(
@@ -119,6 +140,9 @@ public class AuditAutoConfiguration implements WebMvcConfigurer {
         return template;
     }
 
+    /**
+     * Создает ObjectMapper для сериализации событий аудита в JSON.
+     */
     @Bean
     @ConditionalOnProperty(prefix = "audit", name = "enabled", havingValue = "true", matchIfMissing = true)
     public ObjectMapper auditObjectMapper() {

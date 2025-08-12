@@ -16,10 +16,16 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import java.io.IOException;
 
+/**
+ * Servlet фильтр для кэширования содержимого HTTP запросов и ответов.
+ */
 public class ContentCachingFilter implements Filter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentCachingFilter.class);
 
+    /**
+     * Выполняет фильтрацию HTTP запроса.
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
@@ -34,11 +40,17 @@ public class ContentCachingFilter implements Filter {
         }
     }
 
+    /**
+     * Инициализирует фильтр.
+     */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         LOGGER.info("ContentCachingFilter initialized via FilterRegistrationBean");
     }
 
+    /**
+     * Уничтожает фильтр.
+     */
     @Override
     public void destroy() {
         LOGGER.info("ContentCachingFilter destroyed");

@@ -1,10 +1,10 @@
 package com.webbee.service;
 
 import com.webbee.audit_lib.starter.config.AuditProperties;
-import com.webbee.audit_lib.starter.core.AuditContext;
-import com.webbee.audit_lib.starter.core.AuditEvent;
-import com.webbee.audit_lib.starter.core.AuditLog;
-import com.webbee.audit_lib.starter.core.AuditService;
+import com.webbee.audit_lib.starter.util.AuditContext;
+import com.webbee.audit_lib.starter.model.AuditEvent;
+import com.webbee.audit_lib.starter.annotation.AuditLog;
+import com.webbee.audit_lib.starter.service.AuditService;
 import com.webbee.audit_lib.starter.logger.AuditLogger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;

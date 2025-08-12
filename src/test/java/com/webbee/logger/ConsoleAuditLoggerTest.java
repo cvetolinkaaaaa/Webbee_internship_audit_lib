@@ -1,7 +1,6 @@
 package com.webbee.logger;
 
 import com.webbee.audit_lib.starter.config.AuditProperties;
-import com.webbee.audit_lib.starter.core.AuditEvent;
 import com.webbee.audit_lib.starter.logger.ConsoleAuditLogger;
 import org.junit.jupiter.api.Test;
 

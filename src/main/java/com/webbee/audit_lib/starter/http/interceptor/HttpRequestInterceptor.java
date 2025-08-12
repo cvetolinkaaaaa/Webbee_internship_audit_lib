@@ -17,6 +17,9 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Перехватчик для аудита входящих HTTP запросов.
+ */
 @Component
 public class HttpRequestInterceptor implements HandlerInterceptor {
 
@@ -33,6 +36,10 @@ public class HttpRequestInterceptor implements HandlerInterceptor {
         this.objectMapper = objectMapper;
     }
 
+    /**
+     * Вызывается перед выполнением handler'а.
+     * Записывает время начала обработки запроса.
+     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         long startTime = System.currentTimeMillis();
@@ -49,6 +56,10 @@ public class HttpRequestInterceptor implements HandlerInterceptor {
                            org.springframework.web.servlet.ModelAndView modelAndView) {
     }
 
+    /**
+     * Вызывается после успешного выполнения handler'а.
+     * Создает и логирует событие HTTP запроса.
+     */
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         try {
@@ -66,6 +77,9 @@ public class HttpRequestInterceptor implements HandlerInterceptor {
         }
     }
 
+    /**
+     * Создает событие HTTP запроса на основе данных запроса и ответа.
+     */
     private HttpRequestEvent createHttpRequestEvent(HttpServletRequest request, HttpServletResponse response,
                                                     String correlationId, long executionTime, Exception ex) {
         HttpRequestEvent event = new HttpRequestEvent();

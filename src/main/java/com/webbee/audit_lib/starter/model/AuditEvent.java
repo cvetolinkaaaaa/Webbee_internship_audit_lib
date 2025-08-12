@@ -1,4 +1,4 @@
-package com.webbee.audit_lib.starter.core;
+package com.webbee.audit_lib.starter.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -7,6 +7,9 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
+/**
+ * Событие аудита, содержащее информацию о выполнении метода.
+ */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AuditEvent {

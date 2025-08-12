@@ -1,8 +1,8 @@
 package com.webbee.aspect;
 
 import com.webbee.audit_lib.starter.aspect.AuditAspect;
-import com.webbee.audit_lib.starter.core.AuditLog;
-import com.webbee.audit_lib.starter.core.AuditService;
+import com.webbee.audit_lib.starter.annotation.AuditLog;
+import com.webbee.audit_lib.starter.service.AuditService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.jupiter.api.BeforeEach;

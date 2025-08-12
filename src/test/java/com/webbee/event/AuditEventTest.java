@@ -1,6 +1,6 @@
 package com.webbee.event;
 
-import com.webbee.audit_lib.starter.core.AuditEvent;
+import com.webbee.audit_lib.starter.model.AuditEvent;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;

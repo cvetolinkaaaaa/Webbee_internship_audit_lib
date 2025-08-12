@@ -15,6 +15,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * Перехватчик для аудита исходящих HTTP запросов.
+ */
 @Component
 public class OutgoingHttpRequestInterceptor implements ClientHttpRequestInterceptor {
 
@@ -24,6 +27,9 @@ public class OutgoingHttpRequestInterceptor implements ClientHttpRequestIntercep
         this.httpRequestService = httpRequestService;
     }
 
+    /**
+     * Перехватывает исходящий HTTP запрос.
+     */
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body,
                                       ClientHttpRequestExecution execution) throws IOException {
@@ -46,6 +52,9 @@ public class OutgoingHttpRequestInterceptor implements ClientHttpRequestIntercep
         }
     }
 
+    /**
+     * Создает событие HTTP запроса для успешного исходящего запроса.
+     */
     private HttpRequestEvent createOutgoingHttpRequestEvent(
             HttpRequest request, ClientHttpResponse response,
             byte[] requestBody, String correlationId, long executionTime
@@ -75,6 +84,9 @@ public class OutgoingHttpRequestInterceptor implements ClientHttpRequestIntercep
         return event;
     }
 
+    /**
+     * Создает событие HTTP запроса для неуспешного исходящего запроса.
+     */
     private HttpRequestEvent createErrorHttpRequestEvent(HttpRequest request, byte[] requestBody, String correlationId, long executionTime, Exception error) {
         HttpRequestEvent event = new HttpRequestEvent();
         event.setRequestType("Outgoing");
@@ -93,6 +105,9 @@ public class OutgoingHttpRequestInterceptor implements ClientHttpRequestIntercep
         return event;
     }
 
+    /**
+     * Читает тело ответа из ClientHttpResponse.
+     */
     private String readResponseBody(ClientHttpResponse response) throws IOException {
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(response.getBody(), StandardCharsets.UTF_8))) {

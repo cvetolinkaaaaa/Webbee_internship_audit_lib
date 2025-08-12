@@ -8,6 +8,9 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * Событие HTTP запроса для системы аудита.
+ */
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)

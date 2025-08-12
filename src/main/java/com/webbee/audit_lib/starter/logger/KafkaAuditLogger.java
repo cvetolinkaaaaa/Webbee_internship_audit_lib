@@ -1,7 +1,7 @@
 package com.webbee.audit_lib.starter.logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.webbee.audit_lib.starter.core.AuditEvent;
+import com.webbee.audit_lib.starter.model.AuditEvent;
 import com.webbee.audit_lib.starter.config.AuditProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +11,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
+/**
+ * Реализация логгера для отправки событий аудита в Apache Kafka.
+ */
 @Component
 @ConditionalOnClass(KafkaTemplate.class)
 @ConditionalOnProperty(prefix = "audit.kafka", name = "enabled", havingValue = "true", matchIfMissing = false)
@@ -31,6 +34,9 @@ public class KafkaAuditLogger implements AuditLogger {
         this.objectMapper = objectMapper;
     }
 
+    /**
+     * Отправляет событие аудита в Kafka.
+     */
     @Override
     public void log(AuditEvent event) {
         try {

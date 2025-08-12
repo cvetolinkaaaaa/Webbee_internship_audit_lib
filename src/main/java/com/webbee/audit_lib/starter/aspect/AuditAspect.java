@@ -1,8 +1,8 @@
 
 package com.webbee.audit_lib.starter.aspect;
 
-import com.webbee.audit_lib.starter.core.AuditLog;
-import com.webbee.audit_lib.starter.core.AuditService;
+import com.webbee.audit_lib.starter.annotation.AuditLog;
+import com.webbee.audit_lib.starter.service.AuditService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 
+/**
+ * Spring AOP аспект для автоматического аудита методов.
+ */
 @Aspect
 @Component
 public class AuditAspect {
@@ -21,7 +24,10 @@ public class AuditAspect {
         this.auditService = auditService;
     }
 
-    @Around("@annotation(com.webbee.audit_lib.starter.core.AuditLog)")
+    /**
+     * Перехватывает выполнение методов с аннотацией @AuditLog.
+     */
+    @Around("@annotation(com.webbee.audit_lib.starter.annotation.AuditLog)")
     public Object auditMethod(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
